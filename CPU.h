@@ -1,10 +1,20 @@
 #include <iostream>
 #include <bitset>
 #include <stdio.h>
-#include<stdlib.h>
+#include <stdlib.h>
 #include <string>
-using namespace std;
+#include <stdint.h>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <bitset>
 
+using namespace std;
+#define ZERO 0x0  // Five in a row indicates the program has completed
+#define RTYPE 0x33
+#define ITYPE 0x13
+#define LOADWORD 0x3
+#define STOREWORD 0x23
 
 class instruction {
 public:
@@ -27,14 +37,13 @@ private:
 		ze,
 		add,
 		sub,
-		andi,
-		xor,
+		Or,
+		And,
 		addi,
-		sra,
+		ori,
+		andi,
 		lw,
 		sw,
-		blt,
-		jalr
 	};
 
 	struct IFID {
@@ -69,10 +78,10 @@ private:
 	}memwbCurr,memwbNext;
 
 public:
-	CPU();
+	explicit CPU();
 	unsigned long readPC();
-	void fetch();
-	void decode();
+	bitset<32> Fetch(bitset<8>* instmem);
+	bool Decode(instruction* instr);
 	void execute();
 	void memory();
 	void writeback();

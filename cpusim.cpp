@@ -1,5 +1,12 @@
 #include "CPU.h"
 
+#include <cstdint>
+#include <fstream>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <iterator>
+
 #include <iostream>
 #include <bitset>
 #include <stdio.h>
@@ -9,6 +16,12 @@
 #include <sstream>
 using namespace std;
 
+#include <cstdint>
+#include <fstream>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <iterator>
 /*
 Add all the required standard and developed libraries here
 */
@@ -18,6 +31,7 @@ Put/Define any helper function/definitions you need here
 */
 int main(int argc, char* argv[])
 {
+	//cout << "hello world";
 	/* This is the front end of your project.
 	You need to first read the instructions that are stored in a file and load them into an instruction memory.
 	*/
@@ -30,26 +44,29 @@ int main(int argc, char* argv[])
 
 
 	if (argc < 2) {
-		//cout << "No file name entered. Exiting...";
+		cout << "No file name entered. Exiting...";
 		return -1;
 	}
-
 	ifstream infile(argv[1]); //open the file
 	if (!(infile.is_open() && infile.good())) {
 		cout<<"error opening file\n";
 		return 0; 
 	}
 	string line; 
+	
 	int i = 0;
 	while (infile) {
 			infile>>line;
+			
 			stringstream line2(line);
-			int x; 
+			int x;
+			
 			line2>>x;
 			instMem[i] = bitset<8>(x);
 			i++;
 		}
 	int maxPC= i; 
+	cout << instMem << endl;
 
 	/* Instantiate your CPU object here.  CPU class is the main class in this project that defines different components of the processor.
 	CPU class also has different functions for each stage (e.g., fetching an instruction, decoding, etc.).
@@ -68,7 +85,7 @@ int main(int argc, char* argv[])
 		//fetch
 		curr = myCPU.Fetch(instMem); // fetching the instruction
 		instr = instruction(curr);
-
+		//cout << instr.instr << endl;
 		// decode
 		done = myCPU.Decode(&instr);
 		if (done ==false) // break from loop so stats are not mistakenly updated
@@ -80,7 +97,7 @@ int main(int argc, char* argv[])
 		if (myCPU.readPC() > maxPC)
 			break;
 	}
-	int a0,a1 = 0; 
+	int a0 = 0; int a1 = 0;
 	// print the results (you should replace a0 and a1 with your own variables that point to a0 and a1)
 	  cout << "(" << a0 << ", " << a1 << ")" << endl;
 	

@@ -1,6 +1,6 @@
 [Project]
-FileName=project.dev
-Name=项目1
+FileName=computer.dev
+Name=项目3
 Type=1
 Ver=2
 ObjFiles=
@@ -28,7 +28,7 @@ Folders=
 IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
-CompilerSettings=0000000000000000001000000
+CompilerSettings=00000000g0000000001000000
 UnitCount=3
 
 [VersionInfo]
@@ -51,7 +51,7 @@ AutoIncBuildNr=0
 SyncProduct=1
 
 [Unit1]
-FileName=cpusim.cpp
+FileName=C:\Users\xzc\Desktop\test11\CPU.cpp
 CompileCpp=1
 Folder=
 Compile=1
@@ -61,7 +61,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit2]
-FileName=CPU.h
+FileName=C:\Users\xzc\Desktop\test11\CPU.h
 CompileCpp=1
 Folder=
 Compile=1
@@ -71,7 +71,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit3]
-FileName=CPU (2).cpp
+FileName=C:\Users\xzc\Desktop\test11\cpusim.cpp
 CompileCpp=1
 Folder=
 Compile=1
