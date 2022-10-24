@@ -31,7 +31,6 @@ Put/Define any helper function/definitions you need here
 */
 int main(int argc, char* argv[])
 {
-	//cout << "hello world";
 	/* This is the front end of your project.
 	You need to first read the instructions that are stored in a file and load them into an instruction memory.
 	*/
@@ -55,7 +54,7 @@ int main(int argc, char* argv[])
 	string line; 
 	
 	int i = 0;
-	while (infile) {
+	while (infile) {//read the file
 			infile>>line;
 			
 			stringstream line2(line);
@@ -63,43 +62,54 @@ int main(int argc, char* argv[])
 			
 			line2>>x;
 			instMem[i] = bitset<8>(x);
+			//cout << instMem[i] << endl;
 			i++;
 		}
 	int maxPC= i; 
-	cout << instMem << endl;
+
 
 	/* Instantiate your CPU object here.  CPU class is the main class in this project that defines different components of the processor.
 	CPU class also has different functions for each stage (e.g., fetching an instruction, decoding, etc.).
 	*/
 
-	CPU myCPU;  // call the approriate constructor here to initialize the processor...  
+	 // call the approriate constructor here to initialize the processor...  
 	// make sure to create a variable for PC and resets it to zero (e.g., unsigned int PC = 0); 
-
+	CPU myCPU; //Instantiate my cpu
 	/* OPTIONAL: Instantiate your Instruction object here. */
 	//Instruction myInst; 
 	bitset<32> curr;
-	instruction instr = instruction(curr);
+	instruction instr = instruction(curr);//Instantiate Instruction object here
 	bool done = true;
+	int num_cy = 0;//record the number of cycle
 	while (done == true) // processor's main loop. Each iteration is equal to one clock cycle.  
-	{
+	{	
+		
 		//fetch
+		
 		curr = myCPU.Fetch(instMem); // fetching the instruction
 		instr = instruction(curr);
-		//cout << instr.instr << endl;
 		// decode
 		done = myCPU.Decode(&instr);
-		if (done ==false) // break from loop so stats are not mistakenly updated
-			break;
-		// the rest should be implemented here ...
-		// ... 
-		
+		if (done == false) {	
+		 // break from loop so stats are not mistakenly updated
+			break;}
+		//execute
+		myCPU.execute();
+		//memory
+		myCPU.memory();
+		//write back to register
+		myCPU.writeback();
+		num_cy++;//put this before check the PC, so we can count the last ZERO instruction 
 		// sanity check
-		if (myCPU.readPC() > maxPC)
-			break;
+		if (myCPU.readPC() > maxPC){
+			//
+			break;}
+		
 	}
-	int a0 = 0; int a1 = 0;
 	// print the results (you should replace a0 and a1 with your own variables that point to a0 and a1)
-	  cout << "(" << a0 << ", " << a1 << ")" << endl;
+	  cout << "(" << myCPU.registerFile[10] << "," << myCPU.registerFile[11] << ")" << endl;
+	  double ipc = myCPU.ins_counter / (double)num_cy;
+
 	
 	return 0;
 
